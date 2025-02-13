@@ -31,8 +31,8 @@
   <div id="result">Click the button to generate a result</div>
 
   <script>
-    // Step 1: Define the URL of your Google Sheet API
-    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQw6BpyoOXEuyts0ZIx8wpGHtuDumfIdc6AoVja0pEUrxQMhkHG3Vd8EMTeDKFGRlEa4nW9c3Q5v8AO/pub?gid=0&single=true&output=csv"; // Replace with your actual API URL
+    // Step 1: Define the URL of your published Google Sheet
+    const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQw6BpyoOXEuyts0ZIx8wpGHtuDumfIdc6AoVja0pEUrxQMhkHG3Vd8EMTeDKFGRlEa4nW9c3Q5v8AO/pub?gid=0&single=true&output=csv";
 
     // Step 2: Get references to the button and result elements
     const generateButton = document.getElementById("generateButton");
@@ -41,10 +41,10 @@
     // Step 3: Fetch data from the Google Sheet
     let data = [];
     fetch(sheetUrl)
-      .then((response) => response.json())
-      .then((json) => {
-        // Extract the data from the API response
-        data = json.map((row) => row.columnName); // Replace "columnName" with the actual column name in your sheet
+      .then((response) => response.text()) // Parse the CSV data
+      .then((csvText) => {
+        // Convert CSV to an array
+        data = csvText.split("\n").map((row) => row.trim());
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
