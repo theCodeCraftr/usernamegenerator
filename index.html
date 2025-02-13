@@ -30,9 +30,12 @@
       margin-bottom: 20px;
     }
     #result {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: bold;
       margin-top: 20px;
+    }
+    .username {
+      margin: 5px 0;
     }
   </style>
 </head>
@@ -42,9 +45,9 @@
     <button id="generateButton">Generate</button>
 
     <!-- Instruction text below the button -->
-    <div id="instruction">Click Generate to generate a username</div>
+    <div id="instruction">Click Generate to generate usernames</div>
 
-    <!-- Result will appear here -->
+    <!-- Results will appear here -->
     <div id="result"></div>
   </div>
 
@@ -76,12 +79,21 @@
         return;
       }
 
-      // Step 5: Generate a random index to pick a result
-      const randomIndex = Math.floor(Math.random() * data.length);
-      const randomResult = data[randomIndex];
+      // Step 5: Generate five random indices to pick results
+      const randomResults = [];
+      while (randomResults.length < 5) {
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomResult = data[randomIndex];
+        // Ensure no duplicates
+        if (!randomResults.includes(randomResult)) {
+          randomResults.push(randomResult);
+        }
+      }
 
-      // Step 6: Display the result
-      resultElement.textContent = randomResult;
+      // Step 6: Display the results
+      resultElement.innerHTML = randomResults
+        .map((result) => `<div class="username">${result}</div>`)
+        .join("");
     });
   </script>
 </body>
