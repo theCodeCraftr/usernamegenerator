@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Data Generator from Google Sheet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      background-color: #f0f0f0;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <button id="generateButton">Generate</button>
+  <div id="result">Click the button to generate a result</div>
+
+  <script>
+    // Step 1: Define the URL of your Google Sheet API
+    const sheetUrl = "https://api.sheety.co/<your-sheet-id>/<sheet-name>"; // Replace with your actual API URL
+
+    // Step 2: Get references to the button and result elements
+    const generateButton = document.getElementById("generateButton");
+    const resultElement = document.getElementById("result");
+
+    // Step 3: Fetch data from the Google Sheet
+    let data = [];
+    fetch(sheetUrl)
+      .then((response) => response.json())
+      .then((json) => {
+        // Extract the data from the API response
+        data = json.map((row) => row.columnName); // Replace "columnName" with the actual column name in your sheet
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        resultElement.textContent = "Failed to load data.";
+      });
+
+    // Step 4: Add an event listener to the button
+    generateButton.addEventListener("click", () => {
+      if (data.length === 0) {
+        resultElement.textContent = "Data not loaded yet.";
+        return;
+      }
+
+      // Step 5: Generate a random index to pick a result
+      const randomIndex = Math.floor(Math.random() * data.length);
+      const randomResult = data[randomIndex];
+
+      // Step 6: Display the result
+      resultElement.textContent = randomResult;
+    });
+  </script>
+</body>
+</html>
