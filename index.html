@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Data Generator from Google Sheet</title>
+  <title>Random Username Generator</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,22 +13,40 @@
       height: 100vh;
       flex-direction: column;
       background-color: #f0f0f0;
+      margin: 0;
     }
-    #result {
-      margin-top: 20px;
-      font-size: 24px;
-      font-weight: bold;
+    #container {
+      text-align: center;
     }
-    button {
+    #generateButton {
       padding: 10px 20px;
       font-size: 18px;
       cursor: pointer;
+      margin-bottom: 10px;
+    }
+    #instruction {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <button id="generateButton">Generate</button>
-  <div id="result">Click the button to generate a result</div>
+  <div id="container">
+    <!-- Button at the top -->
+    <button id="generateButton">Generate</button>
+
+    <!-- Instruction text below the button -->
+    <div id="instruction">Click Generate to generate a username</div>
+
+    <!-- Result will appear here -->
+    <div id="result"></div>
+  </div>
 
   <script>
     // Step 1: Define the URL of your published Google Sheet
